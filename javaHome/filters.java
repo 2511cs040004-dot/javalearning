@@ -1,30 +1,19 @@
-import java.util.Arrays;
-import java.util.List;
-
-class Student {
-    String name;
-    int marks;
-
-    Student(String name, int marks) {
-        this.name = name;
-        this.marks = marks;
-    }
-}
+import java.util.HashMap;
 
 public class filters {
     public static void main(String[] args) {
 
-        List<Student> students = Arrays.asList(
-                new Student("Rahul", 75),
-                new Student("Anjali", 55),
-                new Student("Kiran", 90),
-                new Student("Priya", 60),
-                new Student("Sneha", 68)
-        );
+        HashMap<String, Integer> map = new HashMap<>();
 
-        students.stream()
-                .filter(student -> student.marks > 60)
-                .forEach(student ->
-                        System.out.println(student.name + " - " + student.marks));
+        map.put("Rahul", 75);
+        map.put("Anjali", 55);
+        map.put("Kiran", 90);
+        map.put("Priya", 60);
+        map.put("Sneha", 68);
+
+        map.entrySet().stream()
+                .filter(entry -> entry.getValue() > 60)
+                .forEach(entry ->
+                        System.out.println(entry.getKey() + " - " + entry.getValue()));
     }
 }
