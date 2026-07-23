@@ -1,0 +1,101 @@
+-- Create a new database
+CREATE DATABASE ShopDB;
+
+-- Switch to the new database
+USE ShopDB;
+
+-- Customers table
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Email VARCHAR(50)
+);
+
+-- Orders table
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    Product VARCHAR(50),
+    Quantity INT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+-- ==========================
+-- INSERT OPERATIONS
+-- ==========================
+
+-- Correct Insert
+INSERT INTO Customers (CustomerID, Name, Email)
+VALUES (1, 'Sharanya', 'sharanya@email.com');
+
+-- Another customer
+INSERT INTO Customers (CustomerID, Name, Email)
+VALUES (2, 'Ravi', 'ravi@email.com');
+
+-- ==========================
+-- ERRORS
+-- ==========================
+
+-- Error 1: Duplicate Primary Key
+INSERT INTO Customers (CustomerID, Name, Email)
+VALUES (1, 'Ramesh', 'ramesh@email.com');
+-- Error: Duplicate entry '1' for key 'PRIMARY'
+
+-- Error 2: Wrong Datatype
+INSERT INTO Orders (OrderID, CustomerID, Product, Quantity)
+VALUES (101, 1, 'Laptop', 'Five');
+-- Error: Incorrect integer value for Quantity
+
+-- Error 3: Foreign Key Violation
+INSERT INTO Orders (OrderID, CustomerID, Product, Quantity)
+VALUES (102, 99, 'Phone', 2);
+-- Error: CustomerID 99 does not exist in Customers table
+
+-- ==========================
+-- CRUD OPERATIONS
+-- ==========================
+
+-- CREATE
+INSERT INTO Customers (CustomerID, Name, Email)
+VALUES (3, 'Anjali', 'anjali@email.com');
+
+-- READ
+SELECT * FROM Customers;
+
+SELECT * FROM Orders
+WHERE CustomerID = 1;
+
+-- UPDATE
+UPDATE Customers
+SET Email = 'sharanya_new@email.com'
+WHERE CustomerID = 1;
+
+-- DELETE
+DELETE FROM Customers
+WHERE CustomerID = 3;
+
+-- ==========================
+-- DELETE vs TRUNCATE vs DROP
+-- ==========================
+
+-- DELETE: Removes selected rows
+DELETE FROM Orders
+WHERE CustomerID = 1;
+
+-- TRUNCATE: Removes all rows
+TRUNCATE TABLE Orders;
+
+-- DROP: Deletes the table permanently
+DROP TABLE Orders;
+
+-- ==========================
+-- LIMIT & OFFSET
+-- ==========================
+
+-- Display first 2 records
+SELECT * FROM Customers
+LIMIT 2;
+
+-- Skip first 2 records and display next 2
+SELECT * FROM Customers
+LIMIT 2 OFFSET 2;
